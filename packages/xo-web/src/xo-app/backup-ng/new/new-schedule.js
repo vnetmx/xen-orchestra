@@ -59,13 +59,13 @@ export default [
         exportRetention,
         copyMode,
         copyRetention,
-        snapshotMode,
+        computedSnapshotMode,
         snapshotRetention,
       }) =>
         !(
           (exportMode && exportRetention > 0) ||
           (copyMode && copyRetention > 0) ||
-          (snapshotMode && snapshotRetention > 0)
+          (computedSnapshotMode && snapshotRetention > 0)
         ),
       scheduleNotEdited: (
         {
