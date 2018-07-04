@@ -18,17 +18,20 @@ export default [
       exportMode,
       snapshotMode,
       schedule: {
+        copyRetention = copyMode ? 1 : undefined,
         cron = '0 0 * * *',
         exportRetention = exportMode ? 1 : undefined,
-        copyRetention = copyMode ? 1 : undefined,
+        name = '',
         snapshotRetention = snapshotMode ? 1 : undefined,
         timezone = moment.tz.guess(),
       },
     }) => ({
+      copyRetention,
       cron,
       exportRetention,
-      copyRetention,
       formId: generateRandomId(),
+      inputNameId: generateRandomId(),
+      name,
       snapshotRetention,
       timezone,
     }),
@@ -49,6 +52,10 @@ export default [
         ...state,
         cron: cronPattern,
         timezone,
+      }),
+      setName: (_, { target: { value } }) => state => ({
+        ...state,
+        name: value,
       }),
     },
     computed: {
@@ -75,6 +82,7 @@ export default [
           copyRetention,
           snapshotRetention,
           timezone,
+          name,
         },
         { schedule }
       ) =>
@@ -86,6 +94,7 @@ export default [
             copyRetention: schedule.copyRetention,
             snapshotRetention: schedule.snapshotRetention,
             timezone: schedule.timezone,
+            name: schedule.name,
           },
           {
             cron,
@@ -93,6 +102,7 @@ export default [
             copyRetention,
             snapshotRetention,
             timezone,
+            name,
           }
         ),
     },
@@ -106,6 +116,18 @@ export default [
         message={_('retentionNeeded')}
       >
         <CardBlock>
+          <FormGroup>
+            <label htmlFor={state.inputNameId}>
+              <strong>{_('formName')}</strong>{' '}
+            </label>
+            <input
+              className='form-control'
+              id={state.inputNameId}
+              onChange={effects.setName}
+              type='text'
+              value={state.name}
+            />
+          </FormGroup>
           {state.exportMode && (
             <FormGroup>
               <label>
@@ -156,6 +178,7 @@ export default [
             data-copyRetention={state.copyRetention}
             data-snapshotRetention={state.snapshotRetention}
             data-timezone={state.timezone}
+            data-name={state.name}
             disabled={state.isScheduleInvalid}
             form={state.formId}
             handler={effects.saveSchedule}

@@ -239,13 +239,15 @@ export default [
             if (
               newSchedule.cron !== oldSchedule.cron ||
               newSchedule.timezone !== oldSchedule.timezone ||
-              newSchedule.enabled !== oldSchedule.enabled
+              newSchedule.enabled !== oldSchedule.enabled ||
+              newSchedule.name !== oldSchedule.name
             ) {
               return editSchedule({
                 id,
                 cron: newSchedule.cron,
                 timezone: newSchedule.timezone,
                 enabled: newSchedule.enabled,
+                name: newSchedule.name,
               })
             }
           })
@@ -260,6 +262,7 @@ export default [
                 cron: newSchedule.cron,
                 timezone: newSchedule.timezone,
                 enabled: newSchedule.enabled,
+                name: newSchedule.name,
               })
 
               settings[id] = settings[tmpId]
@@ -382,7 +385,14 @@ export default [
       },
       saveSchedule: (
         _,
-        { cron, timezone, exportRetention, copyRetention, snapshotRetention }
+        {
+          name,
+          cron,
+          timezone,
+          exportRetention,
+          copyRetention,
+          snapshotRetention,
+        }
       ) => async state => {
         const id =
           state.editionMode === 'creation'
@@ -397,6 +407,7 @@ export default [
               id,
               cron,
               timezone,
+              name,
             },
           },
           settings: {
