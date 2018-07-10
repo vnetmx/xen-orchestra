@@ -11,6 +11,7 @@
 - [Backup NG form] Add offline snapshot info (PR [#3144](https://github.com/vatesfr/xen-orchestra/pull/3144))
 - [Backup NG overview] Display concurrency and offline snapshot value [3087](https://github.com/vatesfr/xen-orchestra/issues/3087) (PR [3145](https://github.com/vatesfr/xen-orchestra/pull/3145))
 - [VM revert] notify the result of reverting a VM [3095](https://github.com/vatesfr/xen-orchestra/issues/3095) (PR [3150](https://github.com/vatesfr/xen-orchestra/pull/3150))
+- [Backup reports] Send report for the interrupted backup jobs on the server startup [#2998](https://github.com/vatesfr/xen-orchestra/issues/#2998) (PR [3164](https://github.com/vatesfr/xen-orchestra/pull/3164) [3154](https://github.com/vatesfr/xen-orchestra/pull/3154))
 
 ### Bug fixes
 
@@ -22,6 +23,7 @@
 
 ### Released packages
 
+- xo-server-backup-reports 0.13.0
 - xo-remote-parser 0.4.0
 - @xen-orchestra/fs 0.2.0
 - vhd-lib 0.3.0
