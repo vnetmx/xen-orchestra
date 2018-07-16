@@ -118,7 +118,7 @@ async function setUpPassport (express, xo) {
   const signInPage = compilePug(
     await readFile(joinPath(__dirname, '..', 'signin.pug'))
   )
-  express.get('/signin', (req, res, next) => {
+  express.get('/xo/signin', (req, res, next) => {
     res.send(
       signInPage({
         error: req.flash('error')[0],
@@ -127,12 +127,12 @@ async function setUpPassport (express, xo) {
     )
   })
 
-  express.get('/signout', (req, res) => {
+  express.get('/xo/signout', (req, res) => {
     res.clearCookie('token')
     res.redirect('/')
   })
 
-  const SIGNIN_STRATEGY_RE = /^\/signin\/([^/]+)(\/callback)?(:?\?.*)?$/
+  const SIGNIN_STRATEGY_RE = /^\/xo\/signin\/([^/]+)(\/xo\/callback)?(:?\?.*)?$/
   express.use(async (req, res, next) => {
     const { url } = req
     const matches = url.match(SIGNIN_STRATEGY_RE)
@@ -145,7 +145,7 @@ async function setUpPassport (express, xo) {
 
         if (!user) {
           req.flash('error', info ? info.message : 'Invalid credentials')
-          return res.redirect('/signin')
+          return res.redirect('/xo/signin')
         }
 
         // The cookie will be set in via the next request because some
@@ -187,7 +187,7 @@ async function setUpPassport (express, xo) {
       next()
     } else {
       req.flash('return-url', url)
-      return res.redirect('/signin')
+      return res.redirect('/xo/signin')
     }
   })
 
